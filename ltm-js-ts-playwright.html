@@ -1,0 +1,540 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LTIMindtree Prep: JS/TS + Advanced Playwright</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<style>
+    :root{--bg:#f4f7f7;--ink:#11232d;--muted:#63717a;--line:#dce5e7;--card:#fff;--accent:#087e83;--accent2:#dff4f1;--navy:#0b1820;--code:#101c24;--shadow:0 10px 30px rgba(19,46,53,.07)}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    .hero{background:radial-gradient(ellipse at 85% 15%,#15525c 0,transparent 40%),linear-gradient(135deg,#0b1820,#142c37 68%,#0e444a);color:#f4ffff;padding:36px 20px 30px}
+    .wrap{max-width:1140px;margin:0 auto}.eyebrow{text-transform:uppercase;letter-spacing:.14em;font-size:11px;font-weight:800;color:#82dbd1}.hero h1{font-size:clamp(29px,5vw,48px);line-height:1.08;letter-spacing:-.04em;margin:9px 0 10px}.hero p{color:#ccdcdf;max-width:750px;margin:0}.hero-meta{display:flex;gap:9px;flex-wrap:wrap;margin-top:20px}.pill{border:1px solid #52707a;border-radius:99px;padding:5px 10px;color:#e5f6f5;font-size:12px}
+    main{padding:20px}.controls{position:sticky;top:0;z-index:5;background:rgba(244,247,247,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:13px 20px}.control-row{max-width:1140px;margin:auto;display:grid;grid-template-columns:minmax(200px,1fr) minmax(180px,.5fr) auto auto;gap:10px;align-items:center}.field,select,.btn{font:inherit;border:1px solid #cbd8dc;background:#fff;border-radius:10px;min-height:42px;padding:9px 12px;color:var(--ink)}.field:focus,select:focus,.btn:focus-visible,summary:focus-visible{outline:3px solid #71cfbf;outline-offset:2px}.btn{cursor:pointer;font-weight:700;white-space:nowrap}.btn:hover{border-color:var(--accent);color:var(--accent)}.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}.status{max-width:1140px;margin:14px auto 0;color:var(--muted);font-size:13px}.stats{display:flex;gap:14px;flex-wrap:wrap}.stats strong{color:var(--ink)}
+    .content{max-width:1140px;margin:22px auto 70px}.section-head{display:flex;justify-content:space-between;gap:16px;align-items:end;margin:25px 0 12px}.section-head h2{font-size:22px;letter-spacing:-.025em;margin:0}.section-head p{margin:0;color:var(--muted);font-size:13px}.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.card{background:var(--card);border:1px solid var(--line);border-radius:15px;padding:17px 18px;box-shadow:var(--shadow);min-width:0}.card-top{display:flex;justify-content:space-between;gap:10px;align-items:start}.kind{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#087e83;font-weight:900}.qnum{font-size:11px;color:#7b8990;white-space:nowrap}.card h3{font-size:16px;line-height:1.42;margin:7px 0 10px;letter-spacing:-.01em}.tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}.tag{font-size:11px;background:#edf4f5;color:#4d6169;padding:3px 8px;border-radius:99px}.answer{border-top:1px solid #e8eeee;margin-top:11px;padding-top:12px}.answer summary{cursor:pointer;color:#087e83;font-weight:800}.answer-body{color:#2b414b;padding-top:11px}.md ul{margin:6px 0 8px;padding-left:20px}.md li{margin:2px 0}.md table{border-collapse:collapse;font-size:13px;margin:8px 0;width:100%}.md th,.md td{border:1px solid var(--line);padding:5px 8px;text-align:left}.md th{background:#edf4f5}.md code{background:#edf4f5;padding:1px 5px;border-radius:5px;font-size:12.5px}.md pre code{background:none;padding:0}.mermaid{background:#fafcfc;border:1px solid var(--line);border-radius:10px;padding:8px;margin:8px 0;overflow:auto;text-align:center}.full{margin-top:10px;font-size:13px}.full summary{cursor:pointer;color:#63717a;font-weight:700}.full div{padding-top:8px;white-space:pre-line;color:#36515a}.codebox pre code.hljs{background:transparent;padding:0}.answer-body p{margin:0 0 10px}.answer-body strong{color:#102a32}.codebox{margin:12px 0 0;background:var(--code);color:#e0f4f2;border-radius:11px;overflow:hidden}.codehead{display:flex;justify-content:space-between;align-items:center;padding:8px 11px;background:#1a2a34;color:#9bc7c7;font-size:11px}.codebox pre{margin:0;padding:12px;overflow:auto;font:12px/1.55 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}.copy{border:0;background:transparent;color:#c8e8e4;cursor:pointer;font-weight:700}.sources{margin-top:12px;font-size:12px;color:var(--muted)}.sources a{color:#087e83;text-decoration:none}.sources a:hover{text-decoration:underline}.empty{padding:30px;text-align:center;color:var(--muted);background:#fff;border:1px dashed var(--line);border-radius:14px}.footer{max-width:1140px;margin:0 auto 36px;padding:18px 20px;border-top:1px solid var(--line);color:var(--muted);font-size:12px}.note{background:#eaf4f4;border-left:3px solid var(--accent);padding:11px 13px;border-radius:6px;margin:14px 0 0;color:#36515a;font-size:13px}
+    @media(max-width:800px){.control-row{grid-template-columns:1fr 1fr}.control-row .field{grid-column:1/-1}.cards{grid-template-columns:1fr}.hero{padding-top:28px}.section-head{align-items:start;flex-direction:column}}
+    @media(max-width:460px){.control-row{grid-template-columns:1fr 1fr}.control-row select{grid-column:1/-1}.control-row .btn{padding:8px}.stats{gap:8px}}
+    @media print{.controls,.hero-meta,.btn,.copy{display:none!important}body{background:#fff}.hero{background:#fff;color:#111;padding:10px 0}.hero p,.pill{color:#333}.cards{display:block}.card{box-shadow:none;break-inside:avoid;margin:8px 0}.answer>summary{list-style:none}.answer>summary::marker{content:""}.answer[open] .answer-body{display:block}}
+  
+.md pre{background:var(--code);color:#e0f4f2;border-radius:11px;padding:12px;overflow:auto;font:12px/1.55 ui-monospace,Menlo,Consolas,monospace}.md pre code.hljs{background:transparent;padding:0}
+.nav{display:flex;gap:8px;flex-wrap:wrap;max-width:1140px;margin:auto}.nav a{color:#087e83;text-decoration:none;font-weight:700;font-size:13px;border:1px solid var(--line);background:#fff;border-radius:99px;padding:5px 11px}
+.qa h3{font-size:15px;margin:0}.qa details{background:#fff;border:1px solid var(--line);border-radius:12px;padding:11px 14px;margin:8px 0}.qa summary{cursor:pointer;font-weight:700}.qa .md{padding-top:8px}
+.topic h1{font-size:24px;margin:30px 0 10px}.topic h2{font-size:17px;margin:18px 0 6px;color:#0b4a50}
+</style></head><body>
+<header class="hero"><div class="wrap"><div class="eyebrow">LTIMindtree · Senior Specialist, Quality Engineering</div>
+<h1>JS / TS + Advanced Playwright</h1>
+<p>Key concepts, code to type out, and practice questions with hidden answers. Read the notes, then open each question only after answering out loud.</p>
+<div class="hero-meta"><span class="pill">Interview: Thu, Oct 29, 2026, 3 PM IST</span><span class="pill"><a style="color:inherit" href="./">Back to main question bank</a></span></div></div></header>
+<section class="controls"><nav class="nav"><a href="#t1">JavaScript</a><a href="#t2">TypeScript</a><a href="#t3">Coding</a><a href="#t4">Playwright advanced</a><a href="#t5">Framework design</a><a href="#" id="toggle">Open all answers</a></nav></section>
+<main><div id="content" class="content"></div></main>
+<footer class="footer">Answer from your own projects. Keep claims to tools you have used.</footer>
+<script id="src" type="text/plain">
+# 1. JavaScript core
+<!--S-->
+## Variables, hoisting, TDZ
+| | var | let | const |
+|---|---|---|---|
+| Scope | function | block | block |
+| Hoisted | yes, as `undefined` | yes, but in TDZ | yes, but in TDZ |
+| Re-assign | yes | yes | no (object contents can still change) |
+
+```js
+console.log(a); // undefined (var hoisted)
+var a = 1;
+console.log(b); // ReferenceError: TDZ
+let b = 2;
+const user = { n: 1 }; user.n = 2; // allowed, binding is constant, not the object
+```
+Function declarations are fully hoisted; function expressions and arrow functions follow their variable rules.
+
+## Closures and scope
+A closure is a function that remembers variables from the scope where it was created.
+```js
+function counter() { let c = 0; return () => ++c; }
+const next = counter(); next(); next(); // 2
+for (var i = 0; i < 3; i++) setTimeout(() => console.log(i)); // 3 3 3
+for (let j = 0; j < 3; j++) setTimeout(() => console.log(j)); // 0 1 2 (new binding per loop)
+```
+
+## this and arrow functions
+- Regular function: `this` depends on how it is called (object method, `call/apply/bind`, `new`).
+- Arrow function: no own `this`; it takes `this` from the surrounding scope. No `arguments`, cannot be used with `new`.
+```js
+const o = { n: 'x', reg() { return this.n }, arr: () => this?.n };
+o.reg(); // 'x'
+o.arr(); // undefined (lexical this)
+```
+
+## == vs ===, truthy and falsy
+`===` compares value and type. `==` converts types first (`'1' == 1` is true, `null == undefined` is true). Use `===`.
+Falsy values: `false, 0, -0, 0n, '', null, undefined, NaN`. Everything else is truthy, including `[]`, `{}`, `'0'`.
+
+## Spread, rest, destructuring
+```js
+const a = [1, 2], b = [...a, 3];           // spread
+const sum = (...n) => n.reduce((s, x) => s + x, 0); // rest
+const { name, role = 'QA', ...rest } = { name: 'Akash', exp: 8 };
+const [first, , third] = [10, 20, 30];
+```
+
+## Array methods
+| Method | Returns |
+|---|---|
+| map | new array, same length |
+| filter | new array of matches |
+| reduce | single accumulated value |
+| find / findIndex | first match / its index |
+| some / every | boolean (any / all) |
+```js
+const tests = [{ n: 'login', ok: true }, { n: 'cart', ok: false }];
+tests.filter(t => !t.ok).map(t => t.n);          // ['cart']
+tests.reduce((acc, t) => acc + (t.ok ? 1 : 0), 0); // 1
+tests.every(t => t.ok); // false
+```
+
+## Promises, async/await, event loop
+- A promise is pending, then fulfilled or rejected.
+- `await` pauses the async function until the promise settles. Wrap in `try/catch` for errors.
+- Event loop order: sync code, then all microtasks (promise callbacks, `queueMicrotask`), then one macrotask (`setTimeout`, I/O), repeat.
+```js
+console.log(1);
+setTimeout(() => console.log(2));
+Promise.resolve().then(() => console.log(3));
+console.log(4); // prints 1 4 3 2
+```
+| Combinator | Behaviour |
+|---|---|
+| Promise.all | all must pass, rejects on first failure |
+| Promise.allSettled | waits for all, gives status of each |
+| Promise.race | first to settle (pass or fail) |
+| Promise.any | first to pass, rejects only if all fail |
+
+```js
+async function load() {
+  try { const [u, o] = await Promise.all([getUser(), getOrders()]); }
+  catch (e) { console.error(e); throw e; }
+  finally { /* cleanup */ }
+}
+```
+Common bug: `forEach` with `async` does not wait. Use `for...of` with `await` or `Promise.all(arr.map(...))`.
+
+## Modules: ESM vs CommonJS
+| ESM | CommonJS |
+|---|---|
+| `import` / `export` | `require` / `module.exports` |
+| static, tree-shakeable | dynamic, loaded at runtime |
+| `"type":"module"` or `.mjs` | default in Node, `.cjs` |
+
+## Shallow vs deep copy
+```js
+const orig = { a: 1, nested: { b: 2 } };
+const shallow = { ...orig };          // nested object is shared
+const deep = structuredClone(orig);   // fully independent (or JSON.parse(JSON.stringify()) for plain data)
+```
+<!--Q-->
+### What is the output of `typeof null` and `typeof NaN`?
+`'object'` (a long-standing JS quirk) and `'number'`.
+### Why does `[] == false` give true?
+`==` converts both to numbers: `[]` becomes `''` then `0`, `false` becomes `0`. This is why we use `===`.
+### What is the difference between `null` and `undefined`?
+`undefined` means a value was never assigned. `null` is an intentional "no value". `typeof undefined` is `'undefined'`.
+### How would you run 3 API calls in parallel and keep going even if one fails?
+`await Promise.allSettled([...])`, then check each result's `status` (`fulfilled` or `rejected`).
+### Explain a closure with a real test use case.
+A factory that builds unique test data: `const nextId = (() => { let i = 0; return () => `user_${++i}` })();` keeps `i` private across calls.
+<!--E-->
+# 2. TypeScript
+<!--S-->
+## type vs interface
+| interface | type |
+|---|---|
+| object shapes, can be extended and merged | anything: unions, tuples, primitives |
+| `extends` | `&` intersection |
+| declaration merging allowed | no merging |
+```ts
+interface User { id: number; name: string }
+interface Admin extends User { perms: string[] }
+type Status = 'pass' | 'fail' | 'skip';        // union
+type Audited = User & { createdAt: Date };      // intersection
+```
+
+## Generics
+```ts
+function first<T>(arr: T[]): T | undefined { return arr[0]; }
+interface ApiResponse<T> { status: number; data: T }
+async function getJson<T>(url: string): Promise<T> { return (await fetch(url)).json() as Promise<T>; }
+```
+
+## Utility types
+| Type | Meaning |
+|---|---|
+| `Partial<T>` | all props optional |
+| `Required<T>` | all props required |
+| `Pick<T,'a'\|'b'>` | only these props |
+| `Omit<T,'a'>` | all except these |
+| `Record<K,V>` | object with keys K and values V |
+| `Readonly<T>` | props cannot be reassigned |
+```ts
+type UserPatch = Partial<User>;
+type EnvUrls = Record<'dev' | 'qa' | 'prod', string>;
+```
+
+## Enums
+```ts
+enum Env { Dev = 'dev', Qa = 'qa' }
+const env: Env = Env.Qa;
+// Many teams prefer: const ENV = { Dev: 'dev' } as const; type Env = typeof ENV[keyof typeof ENV];
+```
+
+## Narrowing and type guards
+```ts
+function len(x: string | string[]) { return typeof x === 'string' ? x.length : x.length; }
+function isUser(o: unknown): o is User { return typeof o === 'object' && o !== null && 'id' in o; }
+// also: instanceof, 'prop' in obj, discriminated unions with a 'kind' field
+```
+
+## any vs unknown vs never
+- `any`: turns off checking. Avoid.
+- `unknown`: anything, but you must narrow before using it. Safe choice for API responses.
+- `never`: a value that cannot happen (function that always throws, exhaustive switch default).
+```ts
+function assertNever(x: never): never { throw new Error('Unhandled ' + x); }
+```
+
+## Optional chaining and nullish coalescing
+```ts
+const city = user?.address?.city ?? 'Unknown'; // ?? only falls back on null/undefined
+const retries = 0 || 3;  // 3 (|| treats 0 as falsy)
+const retries2 = 0 ?? 3; // 0
+```
+
+## Classes: access modifiers and abstract
+```ts
+abstract class BasePage {
+  constructor(protected readonly page: Page) {}
+  abstract readonly url: string;
+  async open() { await this.page.goto(this.url); }
+}
+class LoginPage extends BasePage {
+  readonly url = '/login';
+  private user = this.page.getByLabel('Username');
+}
+```
+`public` (default), `protected` (class and subclasses), `private` (class only, compile time), `#field` (true runtime private).
+
+## tsconfig basics
+```json
+{ "compilerOptions": { "target": "ES2022", "module": "commonjs", "strict": true,
+  "baseUrl": ".", "paths": { "@pages/*": ["pages/*"] }, "esModuleInterop": true } }
+```
+`strict: true` turns on `noImplicitAny`, `strictNullChecks` and more.
+<!--Q-->
+### When would you pick `unknown` over `any`?
+For data you do not control, like an API body. TS forces you to narrow or validate before use, so mistakes are caught at compile time.
+### Difference between `Pick` and `Omit`?
+`Pick` keeps the listed keys; `Omit` removes them. Example: `Omit<User,'password'>` for a safe response type.
+### What is a discriminated union?
+A union where each member has a common literal field, e.g. `{kind:'ok', data} | {kind:'err', msg}`. Switching on `kind` narrows the type.
+### Does TypeScript type checking happen at runtime?
+No. Types are erased after compile. For runtime checks use guards or a schema validator like zod or ajv.
+<!--E-->
+# 3. Coding practice (TypeScript)
+<!--S-->
+```ts
+const reverse = (s: string) => s.split('').reverse().join('');
+const isPalindrome = (s: string) => { const c = s.toLowerCase().replace(/[^a-z0-9]/g, ''); return c === reverse(c); };
+
+function charFreq(s: string): Record<string, number> {
+  const m: Record<string, number> = {};
+  for (const ch of s) m[ch] = (m[ch] ?? 0) + 1;
+  return m;
+}
+
+function duplicates<T>(arr: T[]): T[] {
+  const seen = new Set<T>(), dup = new Set<T>();
+  for (const x of arr) seen.has(x) ? dup.add(x) : seen.add(x);
+  return [...dup];
+}
+
+function secondLargest(arr: number[]): number | undefined {
+  let a = -Infinity, b = -Infinity;
+  for (const n of arr) { if (n > a) { b = a; a = n; } else if (n > b && n < a) b = n; }
+  return b === -Infinity ? undefined : b;
+}
+
+const flatten = (arr: unknown[]): unknown[] =>
+  arr.reduce<unknown[]>((acc, x) => acc.concat(Array.isArray(x) ? flatten(x) : x), []);
+// or arr.flat(Infinity)
+
+const isAnagram = (a: string, b: string) => {
+  const norm = (s: string) => s.toLowerCase().replace(/\s/g, '').split('').sort().join('');
+  return norm(a) === norm(b);
+};
+
+for (let i = 1; i <= 15; i++)
+  console.log(i % 15 === 0 ? 'FizzBuzz' : i % 3 === 0 ? 'Fizz' : i % 5 === 0 ? 'Buzz' : i);
+
+const unique = <T>(arr: T[]) => [...new Set(arr)];
+
+function debounce<A extends unknown[]>(fn: (...a: A) => void, ms: number) {
+  let t: ReturnType<typeof setTimeout> | undefined;
+  return (...args: A) => { clearTimeout(t); t = setTimeout(() => fn(...args), ms); };
+}
+```
+Tip: say the time complexity. Set or map based solutions are O(n); sort based anagram is O(n log n).
+<!--Q-->
+### Count vowels in a string.
+`(s.match(/[aeiou]/gi) ?? []).length`
+### Find the first non-repeating character.
+Build `charFreq(s)`, then `for (const ch of s) if (freq[ch] === 1) return ch;`
+### Reverse each word but keep word order.
+`s.split(' ').map(w => [...w].reverse().join('')).join(' ')`
+### Difference between debounce and throttle?
+Debounce runs after calls stop for X ms. Throttle runs at most once every X ms while calls continue.
+<!--E-->
+# 4. Less-common Playwright concepts
+<!--S-->
+## Custom fixtures
+```ts
+type MyFixtures = { loginPage: LoginPage };
+type MyWorker = { apiToken: string };
+export const test = base.extend<MyFixtures, MyWorker>({
+  loginPage: async ({ page }, use) => { await use(new LoginPage(page)); },          // test scope
+  apiToken: [async ({}, use) => { await use(await fetchToken()); }, { scope: 'worker' }], // once per worker
+  logConsole: [async ({ page }, use) => { page.on('console', m => console.log(m.text())); await use(); }, { auto: true }],
+});
+```
+Code before `use()` is setup, code after is teardown. Auto fixtures run for every test without being requested.
+
+## storageState and setup projects
+```ts
+// auth.setup.ts
+setup('login', async ({ page }) => {
+  await page.goto('/login'); /* fill and submit */
+  await page.context().storageState({ path: '.auth/user.json' });
+});
+// playwright.config.ts
+projects: [
+  { name: 'setup', testMatch: /.*\.setup\.ts/ },
+  { name: 'chromium', use: { storageState: '.auth/user.json' }, dependencies: ['setup'] },
+]
+```
+Setup projects are preferred over `globalSetup` because they show in reports, get traces and use fixtures.
+
+## Network mocking and HAR
+```ts
+await page.route('**/api/users', route => route.fulfill({ status: 200, json: [{ id: 1 }] }));
+await page.route('**/*.{png,jpg}', route => route.abort());
+await page.route('**/api/cart', async route => {
+  const res = await route.fetch(); const json = await res.json();
+  json.total = 0; await route.fulfill({ response: res, json });   // modify real response
+});
+await page.routeFromHAR('hars/app.har', { url: '**/api/**', update: false }); // replay recorded traffic
+const resp = await page.waitForResponse(r => r.url().includes('/api/order') && r.status() === 201);
+```
+
+## APIRequestContext
+```ts
+test('create user', async ({ request }) => {
+  const res = await request.post('/api/users', { data: { name: 'A' }, headers: { Authorization: `Bearer ${t}` } });
+  expect(res.ok()).toBeTruthy();
+  expect(await res.json()).toMatchObject({ name: 'A' });
+});
+const api = await playwright.request.newContext({ baseURL, extraHTTPHeaders: {} }); // standalone
+```
+`page.request` shares cookies with the browser context, useful for API login then UI checks.
+
+## expect.poll, toPass, soft, custom matchers
+```ts
+await expect.poll(async () => (await request.get('/job/1')).json().then(j => j.status),
+  { timeout: 30_000, intervals: [1_000, 2_000] }).toBe('DONE');
+await expect(async () => { const r = await request.get('/health'); expect(r.status()).toBe(200); })
+  .toPass({ timeout: 20_000 });
+await expect.soft(page.getByTestId('price')).toHaveText('$10'); // test continues, fails at end
+expect.extend({
+  async toHaveCount2(locator, n) { const c = await locator.count();
+    return { pass: c === n, message: () => `expected ${n}, got ${c}` }; } });
+```
+
+## Auto-waiting and actionability
+Before `click()` Playwright waits for the element to be attached, visible, stable (not animating), enabled and receiving events. Web-first assertions (`toBeVisible`, `toHaveText`) retry until timeout. Avoid `waitForTimeout`. `force: true` skips the checks (use rarely).
+
+## Locator strategies
+```ts
+page.getByRole('button', { name: 'Submit' });
+page.getByRole('listitem').filter({ hasText: 'Order 42' }).getByRole('button', { name: 'Delete' });
+page.locator('tr').filter({ has: page.getByText('Akash') });
+page.locator('tr').filter({ hasNot: page.getByText('Paid') });
+page.getByRole('row').nth(2);  .first()  .last()
+page.frameLocator('#payment').getByLabel('Card number');
+page.getByRole('button').and(page.getByTitle('Save'));  page.getByText('A').or(page.getByText('B'));
+```
+Shadow DOM: CSS and role locators pierce open shadow roots automatically. XPath does not.
+Strict mode: an action on a locator that matches more than one element throws an error.
+
+## Tabs, popups, dialogs, downloads, uploads
+```ts
+const popupPromise = page.waitForEvent('popup');      // or context.waitForEvent('page')
+await page.getByText('Open terms').click();
+const popup = await popupPromise; await popup.waitForLoadState();
+
+page.on('dialog', d => d.accept('my input'));          // register BEFORE the click
+
+const dl = page.waitForEvent('download'); await page.getByText('Export').click();
+await (await dl).saveAs('out/report.csv');
+
+await page.getByLabel('Upload').setInputFiles('data/file.pdf');
+const fc = page.waitForEvent('filechooser'); await page.getByText('Browse').click();
+await (await fc).setFiles('data/file.pdf');
+```
+
+## Browser contexts
+Each test gets a fresh `BrowserContext` (like a new incognito profile): own cookies, storage and cache. For two users in one test, create two contexts with `browser.newContext({ storageState })`.
+
+## Parallelism, retries, steps, annotations
+```ts
+test.describe.configure({ mode: 'serial' });   // or 'parallel', 'default'; retries: 2
+test('checkout @smoke', { tag: ['@smoke'], annotation: { type: 'issue', description: 'JIRA-12' } }, async ({ page }) => {
+  await test.step('add item', async () => { /* ... */ });
+});
+test.skip(browserName === 'webkit', 'not supported');
+test.fixme(); test.slow(); /* triples timeout */  test.fail(); /* expected to fail */  test.only();
+```
+CLI: `npx playwright test --workers=4 --shard=1/3 --grep @smoke --grep-invert @slow --retries=2 --project=chromium --last-failed`
+In serial mode, if one test fails the rest are skipped and the whole group retries together.
+
+## Trace, video, screenshots
+```ts
+use: { trace: 'on-first-retry', video: 'retain-on-failure', screenshot: 'only-on-failure' }
+```
+`npx playwright show-trace trace.zip` shows DOM snapshots, network, console and each action timeline.
+
+## Visual comparisons
+```ts
+await expect(page).toHaveScreenshot('home.png', { maxDiffPixelRatio: 0.01, mask: [page.getByTestId('clock')] });
+```
+First run creates the baseline. Update with `--update-snapshots`. Run in the same OS/browser (Docker image) to avoid font differences.
+
+## Clock API, emulation, permissions
+```ts
+await page.clock.install({ time: new Date('2026-10-29T10:00:00') });
+await page.clock.fastForward('01:00');  // or runFor, pauseAt, setFixedTime
+const ctx = await browser.newContext({ ...devices['iPhone 13'], locale: 'en-IN', timezoneId: 'Asia/Kolkata',
+  geolocation: { latitude: 22.57, longitude: 88.36 }, permissions: ['geolocation'], colorScheme: 'dark', offline: false });
+```
+
+## Codegen, reporters, component testing
+- `npx playwright codegen --save-storage=auth.json https://app` records actions and suggests locators.
+- Reporters: `list`, `line`, `dot`, `html`, `json`, `junit`, `blob` (merge shards with `npx playwright merge-reports`), or Allure via plugin.
+- Component testing (`@playwright/experimental-ct-react`) mounts React/Vue components in a real browser. Still experimental.
+
+## playwright.config essentials
+```ts
+export default defineConfig({
+  testDir: './tests', fullyParallel: true, forbidOnly: !!process.env.CI,
+  retries: process.env.CI ? 2 : 0, workers: process.env.CI ? 4 : undefined,
+  reporter: [['html'], ['junit', { outputFile: 'results.xml' }]],
+  timeout: 30_000, expect: { timeout: 5_000 },
+  use: { baseURL: process.env.BASE_URL, trace: 'on-first-retry', testIdAttribute: 'data-qa' },
+  projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } },
+             { name: 'mobile', use: { ...devices['Pixel 7'] } }],
+});
+```
+<!--Q-->
+### Difference between test-scoped and worker-scoped fixtures?
+Test scope is created for every test (page, loginPage). Worker scope is created once per worker process and shared (API token, DB connection). Worker fixtures cannot depend on test fixtures.
+### expect.poll vs toPass?
+`expect.poll` repeatedly calls a function returning a value and asserts on it. `toPass` retries a whole block of code with assertions until it passes.
+### How do you test a page when the backend is not ready?
+Mock with `page.route` and `route.fulfill`, or replay a HAR file with `routeFromHAR`.
+### How do you avoid logging in for every test?
+Setup project saves `storageState` once; other projects depend on it and load the state. For multiple roles save one file per role.
+### Why is my click failing with "strict mode violation"?
+The locator matched more than one element. Make it specific with `getByRole` + name, `filter`, or scope inside a parent.
+### How do you handle a new tab?
+Start `context.waitForEvent('page')` or `page.waitForEvent('popup')` before the click, then await it.
+### What does sharding do and how do you merge reports?
+`--shard=1/3` splits tests across machines. Use the `blob` reporter on each shard, then `merge-reports` to build one HTML report.
+### How do you test time-based UI like session timeouts?
+Use `page.clock.install()` then `fastForward` or `runFor` instead of real waits.
+<!--E-->
+# 5. Framework design Q&A
+<!--S-->
+## Folder structure
+```
+playwright-framework/
+  playwright.config.ts
+  .env.qa / .env.dev        # BASE_URL, users (secrets come from CI vault)
+  config/env.ts             # loads env with dotenv, typed
+  fixtures/index.ts         # test.extend with page objects and API clients
+  pages/BasePage.ts, LoginPage.ts ...
+  api/clients/UserClient.ts
+  data/users.json, factories/userFactory.ts
+  tests/ui/*.spec.ts, tests/api/*.spec.ts, tests/auth.setup.ts
+  utils/                    # helpers, logger
+  .github/workflows/pw.yml  # or Jenkinsfile
+```
+
+## POM with fixtures
+```ts
+// fixtures/index.ts
+export const test = base.extend<{ loginPage: LoginPage; dashboard: DashboardPage }>({
+  loginPage: async ({ page }, use) => use(new LoginPage(page)),
+  dashboard: async ({ page }, use) => use(new DashboardPage(page)),
+});
+export { expect } from '@playwright/test';
+// tests/ui/login.spec.ts
+test('valid login', async ({ loginPage, dashboard }) => {
+  await loginPage.login(user.name, user.pass);
+  await expect(dashboard.heading).toBeVisible();
+});
+```
+Keep assertions in tests, keep locators and actions in pages. No `new LoginPage()` inside tests.
+
+## Environment config and test data
+```ts
+import dotenv from 'dotenv';
+dotenv.config({ path: `.env.${process.env.ENV ?? 'qa'}` });
+export const env = { baseUrl: process.env.BASE_URL!, user: process.env.APP_USER! };
+```
+Create data through APIs in fixtures, use unique values (timestamps or faker), and clean up after `use()`.
+
+## CI with GitHub Actions
+```yaml
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy: { matrix: { shard: [1, 2, 3] } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - run: npm ci && npx playwright install --with-deps
+      - run: npx playwright test --shard=${{ matrix.shard }}/3 --reporter=blob
+        env: { BASE_URL: '${{ secrets.BASE_URL }}' }
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: { name: blob-${{ matrix.shard }}, path: blob-report }
+```
+Jenkins: same steps in a `Jenkinsfile` using the official Playwright Docker image, `junit 'results.xml'` and archive the HTML report.
+<!--Q-->
+### Walk me through building a Playwright TS framework from scratch.
+Start with `npm init playwright`, set strict tsconfig and path aliases, add env config with dotenv, build BasePage and page objects, expose them through fixtures, add an auth setup project with storageState, an API client layer on APIRequestContext, data factories, tags for smoke and regression, then CI with sharding, retries on CI only, traces on first retry, and HTML plus JUnit reports.
+### How did you move from Selenium Java to Playwright TS?
+Plain answer: the concepts carry over (POM, data-driven, CI). What changes is auto-waiting instead of explicit waits, fixtures instead of TestNG base classes and listeners, and built-in API testing, tracing and parallelism instead of extra libraries.
+### How do you handle flaky tests?
+Use web-first assertions, no hard waits, stable `getByRole` or test-id locators, isolated data per test, mock unstable third parties, and review traces from retries. Track flaky tests in the report and fix the root cause instead of raising retries.
+### How do you run only smoke tests on every PR?
+Tag tests `@smoke` and run `npx playwright test --grep @smoke` in the PR workflow; run the full regression nightly.
+<!--E-->
+</script>
+<script>
+const raw=document.getElementById('src').textContent; const out=[]; let n=0;
+raw.split(/^# /m).filter(s=>s.trim()).forEach(block=>{n++;
+  const title=block.split('\n')[0]; const [notes,qs]=block.slice(title.length).split('<!--Q-->');
+  const s=notes.replace('<!--S-->',''); const q=(qs||'').replace('<!--E-->','');
+  const qa=q.split(/^### /m).filter(x=>x.trim()).map(x=>{const i=x.indexOf('\n');return `<details><summary>${marked.parseInline(x.slice(0,i))}</summary><div class="md">${marked.parse(x.slice(i))}</div></details>`}).join('');
+  out.push(`<section class="topic" id="t${n}"><h1>${title}</h1><div class="card md">${marked.parse(s)}</div><div class="qa"><h2>Practice questions</h2>${qa}</div></section>`);
+});
+document.getElementById('content').innerHTML=out.join('');
+document.querySelectorAll('pre code').forEach(c=>hljs.highlightElement(c));
+document.getElementById('toggle').onclick=e=>{e.preventDefault();const d=[...document.querySelectorAll('details')];const o=!d.every(x=>x.open);d.forEach(x=>x.open=o);e.target.textContent=o?'Hide all answers':'Open all answers'};
+</script></body></html>
